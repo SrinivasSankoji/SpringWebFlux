@@ -1,5 +1,7 @@
 package com.jio.ngo.employee.repository;
 
+import java.time.Duration;
+
 import org.davidmoten.rx.jdbc.ConnectionProvider;
 import org.davidmoten.rx.jdbc.Database;
 import org.davidmoten.rx.jdbc.pool.NonBlockingConnectionPool;
@@ -45,7 +47,7 @@ public class EmployeeRepository
 			employee.setIdmRilEmail(resultset.getString(6));
 			return employee;
 		});
-		return Flux.from(employeeFlowable);
+		return Flux.from(employeeFlowable).delayElements(Duration.ofSeconds(1)).log();
 	}
 
 }
